@@ -5,3 +5,4 @@ test-output/
 .classpath
 /.idea/
 .settings/
+dependency-reduced-pom.xml
