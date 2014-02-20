@@ -3,6 +3,5 @@ test-output/
 *.iml
 .project
 .classpath
-testdata/
 /.idea/
 .settings/
