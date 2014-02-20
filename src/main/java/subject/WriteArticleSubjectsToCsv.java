@@ -46,10 +46,10 @@ public class WriteArticleSubjectsToCsv {
                 if (companyURL != null)
                     companyWebsite = companyURL.toString();
 
-                csv.write(companyName);     // "company name"
-                csv.write(companyWebsite);  // "company website"
                 csv.write(articleTitle);    // "article title"
                 csv.write(articleUrl);      // "article url"
+                csv.write(companyName);     // "company name"
+                csv.write(companyWebsite);  // "company website"
                 csv.endRecord();
             }
 
@@ -79,10 +79,10 @@ public class WriteArticleSubjectsToCsv {
         csv.setRecordDelimiter('\n');
         csv.setForceQualifier(true);
         // Headings
-        csv.write("company name");
-        csv.write("company website");
         csv.write("article title");
         csv.write("article url");
+        csv.write("company name");
+        csv.write("company website");
         csv.endRecord();
     }
 }
