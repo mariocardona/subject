@@ -22,7 +22,7 @@ public class ArticlePageTest {
     public void validate () throws IOException {
 
         // path to test descriptor and directory where the test data is
-        String testFilesSubpath = System.getProperty("user.dir") + "\\testdata\\ArticlePageTestData\\";
+        String testFilesSubpath = System.getProperty("user.dir") + "/testdata/ArticlePageTestData/";
         String descriptorFilePath = testFilesSubpath + "descriptor.csv";
 
         // read descriptor & execute tests

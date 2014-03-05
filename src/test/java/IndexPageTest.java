@@ -24,7 +24,7 @@ public class IndexPageTest {
     public void validate () throws IOException {
 
         // path to test descriptor and directory where the test data is
-        String testFilesSubpath = System.getProperty("user.dir") + "\\testdata\\IndexPageTestData\\";
+        String testFilesSubpath = System.getProperty("user.dir") + "/testdata/IndexPageTestData/";
         String descriptorFilePath = testFilesSubpath + "descriptor.csv";
 
         // read descriptor & execute tests

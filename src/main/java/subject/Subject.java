@@ -25,7 +25,7 @@ import org.javatuples.Pair;
 public class Subject {
     private static final Logger logger =  LoggerFactory.getLogger(Subject.class);
     private static String techcrunchPage = "http://www.techcrunch.com/";
-    private static String filePath = System.getProperty("user.dir") + "\\subject.csv";
+    private static String filePath = System.getProperty("user.dir") + "/subject.csv";
     private static CsvWriter csv;
 
     public static void main(String... args) throws IOException  {
