@@ -4,7 +4,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.*;
 
-import subject.GetArticlesSimple;
+import subject.IndexPageSimple;
 
 import com.csvreader.CsvReader;
 import org.javatuples.Pair;
@@ -18,13 +18,13 @@ import org.testng.annotations.Test;
 /**
  * Created by mcar on 2/19/14.
  */
-public class GetArticlesTest {
+public class IndexPageTest {
 
     @Test
     public void validate () throws IOException {
 
         // path to test descriptor and directory where the test data is
-        String testFilesSubpath = System.getProperty("user.dir") + "\\testdata\\GetArticlesTestData\\";
+        String testFilesSubpath = System.getProperty("user.dir") + "\\testdata\\IndexPageTestData\\";
         String descriptorFilePath = testFilesSubpath + "descriptor.csv";
 
         // read descriptor & execute tests
@@ -81,7 +81,7 @@ public class GetArticlesTest {
         // execute test case
         File benchmarkHtmlFile = new File(htmlFilePath);
         Document doc = Jsoup.parse(benchmarkHtmlFile, "UTF-8");
-        List<Pair<String, URL>> articleList = new GetArticlesSimple().get(doc);
+        List<Pair<String, URL>> articleList = new IndexPageSimple().getArticlesTitleAndUrl(doc);
 
         // check results
         Assert.assertEquals(count, articleList.size(), "Number of articles returned and in expected set differ: ");

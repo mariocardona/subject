@@ -6,20 +6,23 @@ import java.nio.charset.Charset;
 import com.csvreader.CsvReader;
 import org.javatuples.Pair;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import subject.GetArticleSubjectSimple;
+import subject.ArticlePageSimple;
 
 /**
  * Created by mcar on 2/19/14.
  */
-public class GetArticleSubjectTest {
+public class ArticlePageTest {
     @Test
     public void validate () throws IOException {
 
         // path to test descriptor and directory where the test data is
-        String testFilesSubpath = System.getProperty("user.dir") + "\\testdata\\GetArticleSubjectTestData\\";
+        String testFilesSubpath = System.getProperty("user.dir") + "\\testdata\\ArticlePageTestData\\";
         String descriptorFilePath = testFilesSubpath + "descriptor.csv";
 
         // read descriptor & execute tests
@@ -56,22 +59,18 @@ public class GetArticleSubjectTest {
 
             String articleUrl = values[0];
             String expectedCompanyName = values[1];
-            String expectedCompanyWebsite = values[2];
+            String expectedCompanyUrl = values[2];
 
-            Pair<String,URL> actual = new GetArticleSubjectSimple().get(new URL(articleUrl));
-            String actualCompanyName = actual.getValue0();
-            URL actualCompanyUrl = actual.getValue1();
-            String actualCompanyWebsite;
-            if (actualCompanyUrl == null)
-                actualCompanyWebsite = "N/A";
-            else
-                actualCompanyWebsite = actualCompanyUrl.toString();
+            Document articlePage = Jsoup.connect(articleUrl).get();
+            Pair<String,URL> actual = new ArticlePageSimple().getSubjectNameAndUrl(articlePage);
+            String actualCompanyName = (actual.getValue0() != null) ? actual.getValue0() : "N/A";
+            String actualCompanyUrl = (actual.getValue1() != null) ? actual.getValue1().toString() : "N/A";
 
             Assert.assertEquals(actualCompanyName.compareTo(expectedCompanyName),0, "Actual: "
                     + actualCompanyName + ", " + "Expected: " + expectedCompanyName);
 
-            Assert.assertEquals(actualCompanyWebsite.compareTo(expectedCompanyWebsite),0, "Actual: "
-                    + actualCompanyUrl + ", " + "Expected: " + expectedCompanyWebsite);
+            Assert.assertEquals(actualCompanyUrl.compareTo(expectedCompanyUrl),0, "Actual: "
+                    + actualCompanyUrl + ", " + "Expected: " + expectedCompanyUrl);
         }
     }
 }

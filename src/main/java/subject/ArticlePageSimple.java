@@ -5,38 +5,40 @@ import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.net.URL;
+
+import org.jsoup.nodes.Document;
 
 
 /**
  * Created by mcar on 2/18/14.
  */
-public class GetArticleSubjectSimple implements GetArticleSubject {
-    public static final Logger logger =  LoggerFactory.getLogger(GetArticleSubjectSimple.class);
-    private URL articleUrl;
+public class ArticlePageSimple implements ArticlePage {
+    public static final Logger logger =  LoggerFactory.getLogger(ArticlePageSimple.class);
+    private Document doc;
     private String startName;
     private String revisedName;
     private URL startUrl;
     private URL revisedUrl;
 
-    public GetArticleSubjectSimple() {
-    }
+    public Pair<String,URL> getSubjectNameAndUrl(Document doc) throws IllegalArgumentException {
 
-    public Pair<String,URL> get (URL articleUrl) throws IOException {
+        if (doc == null)
+            throw new IllegalArgumentException();
+
         /*
-        Save the article's URL for looking up the companyName in the body
+        Save doc to look up the companyName in the body
         of the article in the future. See TODO(s) below
          */
-        this.articleUrl = articleUrl;
-        Pair<String, URL> start = GetArticleSubject.super.get(articleUrl);
+        this.doc = doc;
+        Pair<String, URL> start = ArticlePage.super.getSubjectNameAndUrl(doc);
 
         startName = start.getValue0();
         startUrl = start.getValue1();
         return findCompanyNameIfMissing().findCompanyUrlIfMissing().result();
     }
 
-    private GetArticleSubjectSimple findCompanyNameIfMissing () throws IOException {
+    private ArticlePageSimple findCompanyNameIfMissing () {
         if (startName.matches("N/A")) {
             /*
             TODO: on-top-of-my head(this class is for the simple solution): retrieve the text of the article,
@@ -52,20 +54,20 @@ public class GetArticleSubjectSimple implements GetArticleSubject {
         return this;
     }
 
-    private GetArticleSubjectSimple findCompanyUrlIfMissing () throws IOException {
+    private ArticlePageSimple findCompanyUrlIfMissing () {
         if ((! revisedName.matches("N/A")) && startUrl == null) {
             /*
             To-do: (need a developer api key and custom search engine id)
             query google, setting the query to return just one item, and regex the
             inputName vs the returned URL. The code would be something like this:
-            String selector = "http://www.google.com/search?q=" + inputName +"&start=0&num=1";
-            URL myUrl = new URL (selector);
-            Document doc = Jsoup.connect(myUrl.toString()).get();
-            Elements snippet = doc.select("h3.r > a[href]");
-            Iterator iter = snippet.iterator();
-            while (iter.hasNext()) {
-            extract url from href attribute
-            }
+              String selector = "http://www.google.com/search?q=" + inputName +"&start=0&num=1";
+              URL myUrl = new URL (selector);
+              Document doc = Jsoup.connect(myUrl.toString()).getSubjectNameAndUrl();
+              Elements snippet = doc.select("h3.r > a[href]");
+              Iterator iter = snippet.iterator();
+              while (iter.hasNext()) {
+                // extract url from href attribute
+              }
             for now we'll leave the url null
             */
 

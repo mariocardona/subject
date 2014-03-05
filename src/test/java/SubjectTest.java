@@ -12,7 +12,7 @@ import subject.Subject;
 public class SubjectTest {
     @Test
     public void validate () throws IOException {
-        // path to the csv output by WriteArticleSubjectsToCsv.write()
+        // path to the csv output
         String outputCsvFilePath = System.getProperty("user.dir") + "\\subject.csv";
 
         Subject.main();
