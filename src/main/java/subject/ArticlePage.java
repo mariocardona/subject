@@ -19,7 +19,11 @@ import org.slf4j.LoggerFactory;
 public interface ArticlePage {
     public static final Logger logger =  LoggerFactory.getLogger(ArticlePage.class);
 
-    default public Pair<String,URL> getSubjectNameAndUrl(Document doc) throws IllegalArgumentException {
+    /**
+    * @param doc HTML document
+    * @throws IllegalArgumentException if argument is null
+     */
+    default public Pair<String,URL> getSubjectNameAndUrl(Document doc) {
 
         if (doc == null)
             throw new IllegalArgumentException();

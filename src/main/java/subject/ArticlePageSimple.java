@@ -21,17 +21,18 @@ public class ArticlePageSimple implements ArticlePage {
     private URL startUrl;
     private URL revisedUrl;
 
-    public Pair<String,URL> getSubjectNameAndUrl(Document doc) throws IllegalArgumentException {
+    /**
+     * @param doc HTML document
+     * @throws IllegalArgumentException if argument is null
+     */
+    public Pair<String,URL> getSubjectNameAndUrl(Document doc) {
 
-        if (doc == null)
-            throw new IllegalArgumentException();
-
+        Pair<String, URL> start = ArticlePage.super.getSubjectNameAndUrl(doc);
         /*
         Save doc to look up the companyName in the body
         of the article in the future. See TODO(s) below
          */
         this.doc = doc;
-        Pair<String, URL> start = ArticlePage.super.getSubjectNameAndUrl(doc);
 
         startName = start.getValue0();
         startUrl = start.getValue1();

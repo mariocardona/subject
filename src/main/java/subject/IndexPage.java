@@ -19,7 +19,11 @@ import org.slf4j.LoggerFactory;
 public interface IndexPage {
     public static final Logger logger =  LoggerFactory.getLogger(IndexPage.class);
 
-    default public List<Pair<String,URL>> getArticlesTitleAndUrl(Document doc) throws IllegalArgumentException {
+    /**
+    * @param doc HTML document
+    * @throws IllegalArgumentException if argument is null
+    */
+    default public List<Pair<String,URL>> getArticlesTitleAndUrl(Document doc) {
         final List<Pair<String,URL>> result = Lists.newLinkedList();
 
         if (doc == null)
